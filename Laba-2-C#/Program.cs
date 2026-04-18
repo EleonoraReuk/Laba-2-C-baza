@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Security.Cryptography.X509Certificates;
 
 public abstract class Animal
 {
@@ -64,5 +65,31 @@ public class Fish : Animal
     }
 }
 
+public class Reptile : Animal
+{
+    public bool IsVenomous { get; set; }
+    public Reptile(string name, int age, string habitat, string diet, bool isVenomous)
+        : base(name, age, habitat, diet)
+    {
+        IsVenomous = isVenomous;
+    }
+    public override string Getinfo()
+    {
+        return $"{base.Getinfo()}, Тип: Пресмыкающееся, Ядовитое: {(IsVenomous ? "да" : "нет")}";
+    }
+}
 
+public class Amphibian : Animal
+{
+    public string SkinMoisture { get; set; }
+    public Amphibian(string name, int age, string habitat, string diet, string skinMoisture)
+        : base(name, age, habitat, diet)
+    {
+        SkinMoisture = skinMoisture;
+    }
 
+    public override string Getinfo()
+    {
+        return $"{base.Getinfo()}, Тип: Земноводное, Влажность кожи: {SkinMoisture}";
+    }
+}
