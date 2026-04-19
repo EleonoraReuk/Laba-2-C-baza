@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.Design;
 
 public abstract class Animal
 {
@@ -177,6 +178,8 @@ class Program
             Console.WriteLine("1. Показать всех животных");
             Console.WriteLine("2. Показать животное по имени");
             Console.WriteLine("3. Показать животное по индексу");
+            Console.WriteLine("4. Добавить новое животное");
+            Console.WriteLine("5. Выйти");
 
             string choice = Console.ReadLine();
 
@@ -201,9 +204,22 @@ class Program
                         Console.WriteLine("Такого индекса не существует.");
                     }
                     break;
+                case "4":
+                    AddNewAnimal(manager);
+                    break;
+                case "5":
+                    Console.WriteLine("Программа завершена, спасибо!");
+                    return;
+                default:
+                    Console.WriteLine("Неверно выбранный пункт.");
+                    break;
             }
         }
         
+
+    }
+    static void AddNewAnimal(AnimalManager manager)
+    {
 
     }
 }
