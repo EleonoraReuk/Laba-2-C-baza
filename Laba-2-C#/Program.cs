@@ -133,6 +133,31 @@ public class AnimalManager
             Console.WriteLine($"[{i + 1}] {animals[i].Getinfo()}");
         }
     }
+
+    public void ShowAnimalByName(string name)
+    {
+        var animal = animals.Find(a =>  a.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+        if (animal != null)
+        {
+            Console.WriteLine($"{animal.Getinfo()}");
+        }
+        else
+        {
+            Console.WriteLine($"Животное с кличкой \"{name}\" не найдено.");
+        }
+    }
+
+    public void ShowAnimalByIndex(int index)
+    {
+        if (index >= 1 && index <= animals.Count)
+        {
+            Console.WriteLine($"{animals[index - 1].Getinfo()}");
+        }
+        else
+        {
+            Console.WriteLine("Неверный индекс животного.");
+        }
+    }
 }
 
 class Program
@@ -148,14 +173,33 @@ class Program
         //Меню
         while (true)
         {
-            Console.WriteLine("Меню");
+            Console.WriteLine("\nМеню");
             Console.WriteLine("1. Показать всех животных");
-             string choice = Console.ReadLine();
+            Console.WriteLine("2. Показать животное по имени");
+            Console.WriteLine("3. Показать животное по индексу");
+
+            string choice = Console.ReadLine();
 
             switch (choice)
             {
                 case "1":
                     manager.ShowAllAnimals();
+                    break;
+                case "2":
+                    Console.Write("Введите кличку животного: ");
+                    string name = Console.ReadLine();
+                    manager.ShowAnimalByName(name);
+                    break;
+                case "3":
+                    Console.Write("Введите индекс животного: ");
+                    if (int.TryParse(Console.ReadLine(), out int index))
+                    {
+                        manager.ShowAnimalByIndex(index);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Такого индекса не существует.");
+                    }
                     break;
             }
         }
