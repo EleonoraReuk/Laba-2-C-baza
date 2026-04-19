@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Globalization;
-using System.Security.Cryptography.X509Certificates;
 
 public abstract class Animal
 {
@@ -93,3 +91,21 @@ public class Amphibian : Animal
         return $"{base.Getinfo()}, Тип: Земноводное, Влажность кожи: {SkinMoisture}";
     }
 }
+
+public class AnimalManager
+{
+    private static AnimalManager instance;
+    private List<Animal> animals;
+
+    private AnimalManager()
+    {
+        animals = new List<Animal>();
+    }
+    public static AnimalManager Instance
+    {
+        get
+        { return instance; }
+    }
+}
+
+
