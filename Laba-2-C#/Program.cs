@@ -19,8 +19,8 @@ public abstract class Animal
     {
         return $"Кличка: {Name}, Возраст: {Age}, Среда обитания: {Habitat}, Питание: {Diet}";
     }
-
-    public class Mammal : Animal
+}
+public class Mammal : Animal
     {
         public bool HasFur { get; set; }
         public Mammal(string name, int age, string habitat, string diet, bool hasFur)
@@ -33,7 +33,6 @@ public abstract class Animal
             return $"{base.Getinfo()}, Тип: Млекопитающее, Шерсть: {(HasFur ? "есть" : "нет")}";
         }
     }
-}
 
 public class Bird : Animal
 {
@@ -95,6 +94,7 @@ public class Amphibian : Animal
 public class AnimalManager
 {
     private static AnimalManager instance;
+    private static readonly object lockObject = new object();
     private List<Animal> animals;
 
     private AnimalManager()
@@ -104,12 +104,62 @@ public class AnimalManager
     public static AnimalManager Instance
     {
         get
-        { return instance; }
+        {
+            if (instance == null)
+            {
+                lock (lockObject)
+                {
+                    if (instance == null)
+                    {
+                        instance = new AnimalManager();
+                    }
+                }
+            }
+            return instance;
+        }
     }
 
     public void AddAnimal(Animal animal)
     {
         animals.Add(animal);
         Console.WriteLine($"Животное ({animal.Name}) добавлено в список.");
+    }
+
+    public void ShowAllAnimals()
+    {
+        Console.WriteLine("Список всех животных:");
+        for (int i = 0; i < animals.Count; i++)
+        {
+            Console.WriteLine($"[{i + 1}] {animals[i].Getinfo()}");
+        }
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        //Существующие животные в списке.
+        var manager = AnimalManager.Instance;
+        manager.AddAnimal(new Mammal("Лиса", 8, "лес", "хищник", true));
+        manager.AddAnimal(new Bird("Сокол", 15, "горы", "хищник", 3));
+        manager.AddAnimal(new Fish("Треска", 2, "водоем", "всеядное", "пресная"));
+
+        //Меню
+        while (true)
+        {
+            Console.WriteLine("Меню");
+            Console.WriteLine("1. Показать всех животных");
+             string choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                case "1":
+                    manager.ShowAllAnimals();
+                    break;
+            }
+        }
+        
+
     }
 }
