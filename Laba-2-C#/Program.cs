@@ -106,6 +106,10 @@ public class AnimalManager
         get
         { return instance; }
     }
+
+    public void AddAnimal(Animal animal)
+    {
+        animals.Add(animal);
+        Console.WriteLine($"Животное ({animal.Name}) добавлено в список.");
+    }
 }
-
-
