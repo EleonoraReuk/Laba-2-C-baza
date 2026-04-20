@@ -220,6 +220,66 @@ class Program
     }
     static void AddNewAnimal(AnimalManager manager)
     {
+        Console.WriteLine("Добавление нового животного");
+        Console.WriteLine("1. Млекопитающее");
+        Console.WriteLine("2. Птица");
+        Console.WriteLine("3. Рыба");
+        Console.WriteLine("4. Пресмыкающееся");
+        Console.WriteLine("5. Земноводное");
+        Console.Write("Выберите тип животного: ");
+        string typeChoice = Console.ReadLine();
 
+        Console.Write("Кличка: ");
+        string name = Console.ReadLine();
+
+        Console.Write("Возраст: ");
+        int age = int.TryParse(Console.ReadLine(), out int a) ? a : 0;
+
+        Console.Write("Среда обитания (лес, водоём, пустыня): ");
+        string habitat = Console.ReadLine();
+
+        Console.Write("Тип питания (хищник, травоядное, всеядное): ");
+        string diet = Console.ReadLine();
+
+        Animal newAnimal = null;
+
+        switch (typeChoice)
+        {
+            case "1":
+                Console.Write("Наличие шерсти (есть/нет): ");
+                bool hasFur = Console.ReadLine().ToLower() == "есть";
+                newAnimal = new Mammal(name, age, habitat, diet, hasFur);
+                break;
+            case "2":
+                Console.Write("Размах крыльев (в метрах): ");
+                double wingSpan = double.TryParse(Console.ReadLine(), out double w) ? w : 0;
+                newAnimal = new Bird(name, age, habitat, diet, wingSpan);
+                break;
+            case "3":
+                Console.Write("Тип воды (пресная/морская): ");
+                string waterType = Console.ReadLine();
+                newAnimal = new Fish(name, age, habitat, diet, waterType);
+                break;
+            case "4":
+                Console.Write("Ядовитое (да/нет): ");
+                bool isVenomous  = Console.ReadLine().ToLower() == "да";
+                newAnimal = new Reptile(name, age, habitat, diet, isVenomous);
+                break;
+            case "5":
+                Console.Write("Влажность кожи: ");
+                string skinMoisture = Console.ReadLine();
+                newAnimal = new Amphibian(name, age, habitat, diet, skinMoisture);
+                break;
+            default:
+                Console.WriteLine("Неверный тип животного!");
+                return;
+                
+
+        }
+
+        if (newAnimal != null)
+        {
+            manager.AddAnimal(newAnimal);
+        }
     }
 }
