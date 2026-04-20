@@ -24,14 +24,24 @@ public abstract class Animal
 public class Mammal : Animal
     {
         public bool HasFur { get; set; }
-        public Mammal(string name, int age, string habitat, string diet, bool hasFur)
+        public string FurColor { get; set; }
+        public Mammal(string name, int age, string habitat, string diet, bool hasFur, string furColor = "Неизвестно")
             : base(name, age, habitat, diet)
         {
             HasFur = hasFur;
+            FurColor = furColor;
         }
         public override string Getinfo()
         {
-            return $"{base.Getinfo()}, Тип: Млекопитающее, Шерсть: {(HasFur ? "есть" : "нет")}";
+            if (HasFur)
+            {
+                return $"{base.Getinfo()}, Тип: Млекопитающее, Шерсть: есть, Окрас шерсти: {FurColor}";
+            }
+            else
+            {
+            return $"{base.Getinfo()}, Тип: Млекопитающее, Шерсть: нет";
+            }
+           
         }
     }
 
@@ -167,7 +177,7 @@ class Program
     {
         //Существующие животные в списке.
         var manager = AnimalManager.Instance;
-        manager.AddAnimal(new Mammal("Лиса", 8, "лес", "хищник", true));
+        manager.AddAnimal(new Mammal("Лиса", 8, "лес", "хищник", true, "рыжий"));
         manager.AddAnimal(new Bird("Сокол", 15, "горы", "хищник", 3));
         manager.AddAnimal(new Fish("Треска", 2, "водоем", "всеядное", "пресная"));
 
@@ -248,7 +258,19 @@ class Program
             case "1":
                 Console.Write("Наличие шерсти (есть/нет): ");
                 bool hasFur = Console.ReadLine().ToLower() == "есть";
-                newAnimal = new Mammal(name, age, habitat, diet, hasFur);
+                
+
+                string furColor = "Неизвестно";
+                if (hasFur)
+                {
+                    Console.Write("Окрас шерсти: ");
+                    furColor = Console.ReadLine();
+                    if (string.IsNullOrWhiteSpace(furColor))
+                    {
+                        furColor = "Неизвестно"; 
+                    }
+                }
+                newAnimal = new Mammal(name, age, habitat, diet, hasFur, furColor);
                 break;
             case "2":
                 Console.Write("Размах крыльев (в метрах): ");
