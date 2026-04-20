@@ -180,6 +180,8 @@ class Program
         manager.AddAnimal(new Mammal("Лиса", 8, "лес", "хищник", true, "рыжий"));
         manager.AddAnimal(new Bird("Сокол", 15, "горы", "хищник", 3));
         manager.AddAnimal(new Fish("Треска", 2, "водоем", "всеядное", "пресная"));
+        manager.AddAnimal(new Reptile("Крокодил", 12, "водоем", "хищник", true));
+        manager.AddAnimal(new Amphibian("Тритон", 9, "водоем", "всеядное", "влажная"));
 
         //Меню
         while (true)
@@ -190,6 +192,7 @@ class Program
             Console.WriteLine("3. Показать животное по индексу");
             Console.WriteLine("4. Добавить новое животное");
             Console.WriteLine("5. Выйти");
+            Console.WriteLine("Выберите действие: ");
 
             string choice = Console.ReadLine();
 
